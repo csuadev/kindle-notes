@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import useNormalizeNotes from './hooks/useNormalizeNotes';
+import { useState } from 'react';
 import Layout from './components/Layout';
-import Note from './components/Note';
+import Notes from './components/Notes';
+import Titles from './components/Titles';
+import useNormalizeNotes from './hooks/useNormalizeNotes';
 
 function App() {
   const [highlights, setHighlights] = useState(null);
@@ -17,32 +18,24 @@ function App() {
     reader.readAsText(e.target.files[0])
   };
 
-  const { notes } = useNormalizeNotes(highlights || []);
+  const { notes, titles } = useNormalizeNotes(highlights || []);
 
   return (
-    <Layout title="Kindle Notes">
-        <span>Kindle Notes</span>
-        {
-          !highlights && (
-            <div>
-              <form>
-                <input type="file" onChange={e => handleFileContent(e)} />
-              </form>
-            </div>
-          )
-        }
-
-        {
-          highlights && 
-            notes.map((note, index) => (
-              <Note
-                key={index}
-                title={note.title}
-                highlight={note.highlight}
-              />
-            )
-          )
-        }
+    <Layout title="Kindle Notes" the>
+      {
+        highlights ? (
+          <>
+            <Titles titles={titles} />
+            <Notes notes={notes} />
+          </>
+        ) : (
+          <div>
+            <form>
+              <input type="file" onChange={e => handleFileContent(e)} />
+            </form>
+          </div>
+        )
+      }
     </Layout>
   );
 }
