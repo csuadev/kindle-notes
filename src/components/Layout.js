@@ -1,31 +1,16 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
 import Menu from './Menu';
-import { ThemeContext } from '../context/ThemeContext';
+import Footer from './Footer';
 
 const Layout = ({ title = 'Title', children }) => {
-  const { theme } = useContext(ThemeContext);
-
   return (
-    <LayoutContainer theme={theme}>
-      <LayoutContent>
+    <div className='bg-white dark:bg-zinc-900 text-slate-900 dark:text-white transition-colors flex justify-between min-h-screen'>
+      <div className='w-10/12 mx-auto flex flex-col justify-between'>
         <Menu />
         {children}
-      </LayoutContent>
-    </LayoutContainer>
+        <Footer />
+      </div>
+    </div>
   )
 }
-
-const LayoutContainer = styled.div`
-  background: ${props => props.theme === 'light' ? '#fff' : '#282c34'};
-  min-height: 100vh;
-  color: ${props => props.theme === 'light' ? '#333' : '#fff'}};
-  transition: all 0.5s ease;
-`
-  
-const LayoutContent = styled.div`
-  width: 80%;
-  margin: 0 auto;
-`
 
 export default Layout

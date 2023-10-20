@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
+import { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
 const Menu = () => {
@@ -10,34 +9,23 @@ const Menu = () => {
   }
 
   return (
-    <MenuContainer>
+    <div className='flex items-center justify-between'>
       <div>
-        <Title>Kindle Notes</Title>
+        <h1 className=''>Kindle Notes</h1>
       </div>
-      <div>
-        <span>About</span>
-        <span onClick={handleTheme}>{
+      <div className='flex'>
+        <ul className='flex space-x-6 mr-6'>
+          <li>
+            <a href='#'>About</a>
+          </li>
+          <li>Contact</li>
+        </ul>
+        <span className='cursor-pointer' onClick={handleTheme}>{
           theme === 'light' ? '🌚' : '🌞'
         }</span>
       </div>
-    </MenuContainer>
+    </div>
   )
 }
-
-const MenuContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  & span {
-    cursor: pointer;
-    padding-left: 20px;
-  }
-`
-
-const Title = styled.h1`
-  padding: 30px 0 20px 0;
-  margin: 0;
-`
 
 export default Menu

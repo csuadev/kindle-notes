@@ -1,26 +1,11 @@
-import styled from 'styled-components';
-
 const Titles = ({ titles }) => (
-  <TitlesContainer>
+  <div className='flex flex-wrap'>
     {titles.map((title, index) => (
-      <Title key={index}>
+      <div key={index} className='px-4 py-2 my-1 rounded-full border border-blue-400'>
         <span>{title}</span>
-      </Title>
+      </div>
     ))}
-  </TitlesContainer>
+  </div>
 );
-
-const TitlesContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`
-
-const Title = styled.div`
-  padding: 8px 15px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  font-size: 14px;
-  margin: 3px;
-`
 
 export default Titles
