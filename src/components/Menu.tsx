@@ -2,11 +2,7 @@ import { useContext } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
 const Menu = () => {
-  const { theme, setTheme } = useContext(ThemeContext);
-
-  const handleTheme = () => {
-    setTheme(prevState => prevState === 'light' ? 'dark' : 'light');
-  }
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <div className='flex items-center justify-between'>
@@ -20,7 +16,7 @@ const Menu = () => {
           </li>
           <li>Contact</li>
         </ul>
-        <span className='cursor-pointer' onClick={handleTheme}>{
+        <span className='cursor-pointer' onClick={toggleTheme}>{
           theme === 'light' ? '🌚' : '🌞'
         }</span>
       </div>

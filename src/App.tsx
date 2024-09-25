@@ -11,8 +11,6 @@ function App() {
   const [selectedTitle, setSelectedTitle] = useState('');
   const { theme } = useContext(ThemeContext);
 
-  console.log('high', highlights);
-
   const { notes, titles } = useNormalizeNotes(highlights || []);
 
   const handleNotes = () => {
