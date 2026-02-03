@@ -17,15 +17,27 @@ const Menu = () => {
     <header className='flex items-center justify-between'>
       <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <a href='/'>
-          <h1 className='text-3xl font-bold transition-all transition-discrete duration-300'>
-            K
-            <span className={`inline-block ${isHovered ? 'w-fit opacity-100' : 'w-0 opacity-0'}`}>
-              indle
-            </span>
-            N
-            <span className={`inline-block ${isHovered ? 'w-fit opacity-100' : 'w-0 opacity-0'}`}>
-              otes
-            </span>
+          <h1 className='text-3xl font-bold flex items-baseline leading-none'>
+            {[
+              <span className="inline-block leading-none" key="k">K</span>,
+              <span
+                className={`inline-block overflow-hidden whitespace-nowrap leading-none transition-all duration-500 ease-out motion-reduce:transition-none ${
+                  isHovered ? 'max-w-[5ch] opacity-100' : 'max-w-0 opacity-0'
+                }`}
+                key="indle"
+              >
+                {'indle'}
+              </span>,
+              <span className="inline-block leading-none" key="n">N</span>,
+              <span
+                className={`inline-block overflow-hidden whitespace-nowrap leading-none transition-all duration-500 ease-out motion-reduce:transition-none ${
+                  isHovered ? 'max-w-[4ch] opacity-100' : 'max-w-0 opacity-0'
+                }`}
+                key="otes"
+              >
+                {'otes'}
+              </span>,
+            ]}
           </h1>
         </a> 
       </div>

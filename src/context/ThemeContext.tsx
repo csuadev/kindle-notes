@@ -1,4 +1,5 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { STORAGE_KEYS } from '../constants/storageKeys';
 
 enum Theme {
   light = 'light',
@@ -16,11 +17,55 @@ const ThemeContext = createContext<ThemeContextType>({
 });
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>(Theme.light);
+  const isBrowser = typeof window !== 'undefined';
+
+  const getSystemTheme = () => {
+    if (!isBrowser || !window.matchMedia) return Theme.light;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? Theme.dark : Theme.light;
+  };
+
+  const getStoredTheme = () => {
+    if (!isBrowser) return null;
+    const stored = window.localStorage.getItem(STORAGE_KEYS.theme);
+    const source = window.localStorage.getItem(STORAGE_KEYS.themeSource);
+    if (source !== 'user') return null;
+    if (stored === Theme.dark || stored === Theme.light) return stored;
+    return null;
+  };
+
+  const [hasUserPreference, setHasUserPreference] = useState(() => {
+    if (!isBrowser) return false;
+    return window.localStorage.getItem(STORAGE_KEYS.themeSource) === 'user';
+  });
+
+  const [theme, setTheme] = useState<Theme>(() => getStoredTheme() ?? getSystemTheme());
 
   const toggleTheme = () => {
-    setTheme(theme === Theme.light ? Theme.dark : Theme.light);
+    setHasUserPreference(true);
+    setTheme(prevTheme => (prevTheme === Theme.light ? Theme.dark : Theme.light));
   };
+
+  useEffect(() => {
+    if (!isBrowser) return;
+    window.localStorage.setItem(STORAGE_KEYS.theme, theme);
+    if (hasUserPreference) {
+      window.localStorage.setItem(STORAGE_KEYS.themeSource, 'user');
+    } else {
+      window.localStorage.removeItem(STORAGE_KEYS.themeSource);
+    }
+  }, [hasUserPreference, isBrowser, theme]);
+
+  useEffect(() => {
+    if (!isBrowser || hasUserPreference || !window.matchMedia) return;
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (event: MediaQueryListEvent) => {
+      setTheme(event.matches ? Theme.dark : Theme.light);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, [hasUserPreference, isBrowser]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

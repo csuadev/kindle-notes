@@ -24,9 +24,9 @@ const UploadFile = ({ setHighlights }: UploadFileProps) => {
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    if (e.target.files) {
-      handleFileContent(e.target.files[0]);
-    }
+    const file = e.target.files?.[0];
+    if (!file) return;
+    handleFileContent(file);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -41,7 +41,9 @@ const UploadFile = ({ setHighlights }: UploadFileProps) => {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-    handleFileContent(e.dataTransfer.files[0]);
+    const file = e.dataTransfer.files?.[0];
+    if (!file) return;
+    handleFileContent(file);
   }
 
   return (
