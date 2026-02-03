@@ -9,9 +9,9 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => (
   <div className='bg-white dark:bg-zinc-900 text-slate-900 dark:text-white transition-colors flex justify-between min-h-screen'>
-    <div className='w-10/12 mx-auto flex flex-col justify-between'>
+    <div className='w-10/12 mx-auto flex flex-col'>
       <Menu />
-      {children}
+        {children}
       <Footer />
     </div>
   </div>

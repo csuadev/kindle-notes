@@ -1,10 +1,15 @@
+import React, { useContext, useState } from 'react';
+import { ThemeContext } from '../context/ThemeContext';
+
 type UploadFileProps = {
   setHighlights: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 const UploadFile = ({ setHighlights }: UploadFileProps) => {
-  const handleFileContent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
+  const [isDragging, setIsDragging] = useState(false);
+  const { theme } = useContext(ThemeContext);
+
+  const handleFileContent = (file: File) => {
     const reader = new FileReader();
     reader.onloadend = (e: ProgressEvent<FileReader>) => {
       const result = e.target?.result;
@@ -13,15 +18,54 @@ const UploadFile = ({ setHighlights }: UploadFileProps) => {
         setHighlights(result.split('=========='));
       }
     };
+    
+    reader.readAsText(file);
+  };
 
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     if (e.target.files) {
-      reader.readAsText(e.target.files[0]);
+      handleFileContent(e.target.files[0]);
     }
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  }
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    handleFileContent(e.dataTransfer.files[0]);
+  }
+
   return (
-    <form>
-      <input className="bg-cyan-500" type="file" onChange={e => handleFileContent(e)} />
+    <form className='transition duration-300'>
+      <div
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        className={`h-50 flex justify-center items-center align-center flex-col p-16 rounded-lg border border-dashed
+ ${isDragging ? ` border-cyan-500` : `border-sky-600`} hover:opacity-90 ${
+  theme === 'light' ? `border-slate-300 text-black` : ` border-slate-700 text-white`
+ }`}
+      >
+        <p>Drop your <em>My Clippings.txt</em> file here or click to select it</p>
+        <input
+          type="file"
+          onChange={handleFileInputChange}
+          style={{ display: 'none' }}
+          id="fileInput"
+        />
+          <label htmlFor="fileInput" className={`cursor-pointer mt-4 rounded-lg py-2 px-4 ${theme === 'light' ? 'bg-slate-300' : 'bg-slate-700'}`}>
+            Browse File
+          </label>
+      </div>
     </form>
   )
 };
