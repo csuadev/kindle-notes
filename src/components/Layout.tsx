@@ -5,9 +5,9 @@ import Footer from './Footer';
 type LayoutProps = {
   title?: string;
   children: ReactNode;
-}
+};
 
-const Layout = ({ children }: LayoutProps) => (
+const Layout = ({ children }: LayoutProps): JSX.Element => (
   <div className='bg-white dark:bg-zinc-900 text-slate-900 dark:text-white transition-colors flex justify-between min-h-screen'>
     <div className='w-10/12 mx-auto flex flex-col'>
       <Menu />
@@ -15,6 +15,6 @@ const Layout = ({ children }: LayoutProps) => (
       <Footer />
     </div>
   </div>
-)
+);
 
 export default Layout

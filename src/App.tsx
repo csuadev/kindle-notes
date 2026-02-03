@@ -7,6 +7,7 @@ import { ThemeContext } from './context/ThemeContext';
 import UploadFile from './components/UploadFile';
 import usePersistedState from './hooks/usePersistedState';
 import { STORAGE_KEYS } from './constants/storageKeys';
+import type { Note } from './types/notes';
 
 function App(): React.ReactElement {
   const [highlights, setHighlights] = usePersistedState<string[]>(STORAGE_KEYS.highlights, []);
@@ -28,7 +29,7 @@ function App(): React.ReactElement {
     'The Pragmatic Programmer',
   ];
 
-  const emptyStateNotes = [
+  const emptyStateNotes: Note[] = [
     {
       highlight: '“You do not rise to the level of your goals. You fall to the level of your systems.”',
       title: 'Atomic Habits',

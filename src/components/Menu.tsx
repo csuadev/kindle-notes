@@ -1,15 +1,15 @@
 import { useContext, useState } from 'react';
 import { ThemeContext } from '../context/ThemeContext';
 
-const Menu = () => {
+const Menu = (): JSX.Element => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (): void => {
     setIsHovered(true);
   }
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (): void => {
     setIsHovered(false);
   }
 
@@ -42,12 +42,16 @@ const Menu = () => {
         </a> 
       </div>
       <div className='flex'>
-        <span className='cursor-pointer' onClick={toggleTheme}>{
-          theme === 'light' ? '🌚' : '🌞'
-        }</span>
+        <button
+          type="button"
+          className='cursor-pointer bg-transparent border-0 p-0'
+          onClick={toggleTheme}
+        >
+          {theme === 'light' ? '🌚' : '🌞'}
+        </button>
       </div>
     </header>
-  )
+  );
 }
 
 export default Menu

@@ -16,15 +16,15 @@ const ThemeContext = createContext<ThemeContextType>({
   toggleTheme: () => {},
 });
 
-const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
+const ThemeProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const isBrowser = typeof window !== 'undefined';
 
-  const getSystemTheme = () => {
+  const getSystemTheme = (): Theme => {
     if (!isBrowser || !window.matchMedia) return Theme.light;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? Theme.dark : Theme.light;
   };
 
-  const getStoredTheme = () => {
+  const getStoredTheme = (): Theme | null => {
     if (!isBrowser) return null;
     const stored = window.localStorage.getItem(STORAGE_KEYS.theme);
     const source = window.localStorage.getItem(STORAGE_KEYS.themeSource);
@@ -40,7 +40,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [theme, setTheme] = useState<Theme>(() => getStoredTheme() ?? getSystemTheme());
 
-  const toggleTheme = () => {
+  const toggleTheme = (): void => {
     setHasUserPreference(true);
     setTheme(prevTheme => (prevTheme === Theme.light ? Theme.dark : Theme.light));
   };

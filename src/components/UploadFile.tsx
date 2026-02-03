@@ -5,11 +5,11 @@ type UploadFileProps = {
   setHighlights: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-const UploadFile = ({ setHighlights }: UploadFileProps) => {
+const UploadFile = ({ setHighlights }: UploadFileProps): JSX.Element => {
   const [isDragging, setIsDragging] = useState(false);
   const { theme } = useContext(ThemeContext);
 
-  const handleFileContent = (file: File) => {
+  const handleFileContent = (file: File): void => {
     const reader = new FileReader();
     reader.onloadend = (e: ProgressEvent<FileReader>) => {
       const result = e.target?.result;
@@ -22,23 +22,23 @@ const UploadFile = ({ setHighlights }: UploadFileProps) => {
     reader.readAsText(file);
   };
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const file = e.target.files?.[0];
     if (!file) return;
     handleFileContent(file);
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
     setIsDragging(true);
   }
 
-  const handleDragLeave = () => {
+  const handleDragLeave = (): void => {
     setIsDragging(false);
   }
 
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
     setIsDragging(false);
     const file = e.dataTransfer.files?.[0];

@@ -1,9 +1,11 @@
-type Note = {
-  highlight: string;
-  title: string;
+import type { Note } from '../types/notes';
+
+type NotesProps = {
+  notes: Note[];
+  selectedTitle: string;
 };
 
-const Notes = ({ notes, selectedTitle }: { notes: Note[], selectedTitle: string }) => (
+const Notes = ({ notes, selectedTitle }: NotesProps): JSX.Element => (
   <div className='mt-10'>
     {selectedTitle && (
       <div className='text-center text-xl font-bold'>{selectedTitle}</div>

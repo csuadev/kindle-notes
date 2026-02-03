@@ -6,7 +6,7 @@ type TitlesProps = {
   setSelectedTitle: React.Dispatch<React.SetStateAction<string>>,
 }
 
-const Titles = ({ titles, selectedTitle, setSelectedTitle }: TitlesProps) => {
+const Titles = ({ titles, selectedTitle, setSelectedTitle }: TitlesProps): JSX.Element => {
   const handleSelectTitle = (title: string) => {
     if (title !== selectedTitle) {
       setSelectedTitle(title);
@@ -38,7 +38,7 @@ const Titles = ({ titles, selectedTitle, setSelectedTitle }: TitlesProps) => {
         </div>
       ))}
     </div>
-  )
+  );
 };
 
 export default Titles;
