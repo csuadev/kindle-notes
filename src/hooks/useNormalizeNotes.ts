@@ -5,11 +5,11 @@ type NormalizeResult = {
   titles: string[];
 };
 
-const useNormalizeNotes = (noteList: string[]): NormalizeResult => {
+const useNormalizeNotes = (noteList: ReadonlyArray<string>): NormalizeResult => {
   const notes: Note[] = [];
   const titles: string[] = [];
 
-  noteList.forEach(note => {
+  noteList.forEach((note: string, index: number) => {
     const info = note.split(/\r?\n/) || [];
     const title = (info[0]?.length ?? 0) > 0 ? info[0] : info[1];
     const highlight = (info[3]?.length ?? 0) > 0 ? info[3] : info[4];
@@ -17,6 +17,7 @@ const useNormalizeNotes = (noteList: string[]): NormalizeResult => {
     if (!title || !highlight || highlight.length === 0) return;
 
     notes.push({
+      id: `${title}::${highlight}::${index}`,
       title,
       highlight,
     });

@@ -1,5 +1,7 @@
 const Footer = (): JSX.Element => (
-  <footer className='pb-4 mt-5 text-center text-sm'>Carlos Sz. All rights reserved.</footer>
+  <footer className='pb-4 mt-8 text-center text-xs text-slate-400'>
+    Carlos Sz. All rights reserved.
+  </footer>
 );
 
 export default Footer
